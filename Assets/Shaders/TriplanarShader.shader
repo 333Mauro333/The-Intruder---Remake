@@ -5,6 +5,7 @@ Shader "Custom/TriplanarShader"
         _MainTex ("Texture", 2D) = "white" {}
         _Tiling ("Tiling", Float) = 1
         _BlendSharpness ("Blend Sharpness", Float) = 2
+        _Tint ("Tint Color", Color) = (1,1,1,1)
     }
     SubShader
     {
@@ -15,6 +16,7 @@ Shader "Custom/TriplanarShader"
         sampler2D _MainTex;
         float _Tiling;
         float _BlendSharpness;
+        fixed4 _Tint;
 
         struct Input
         {
@@ -38,6 +40,10 @@ Shader "Custom/TriplanarShader"
 
             // Blended color
             float4 finalColor = xTex * blend.x + yTex * blend.y + zTex * blend.z;
+
+            // Apply tint
+            finalColor.rgb *= _Tint.rgb;
+
             o.Albedo = finalColor.rgb;
             o.Alpha = finalColor.a;
         }
