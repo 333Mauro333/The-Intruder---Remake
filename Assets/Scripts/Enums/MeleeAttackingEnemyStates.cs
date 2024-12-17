@@ -1,2 +1,5 @@
 
-public enum MeleeAttackingEnemyStates { Idle, FollowingPlayer }
+namespace TheIntruder_Remake
+{
+	public enum MeleeAttackingEnemyStates { Idle, FollowingPlayer }
+}

@@ -2,46 +2,59 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-public class MeleeAttackingEnemyNavMesh : MonoBehaviour
+namespace TheIntruder_Remake
 {
-	[Header("References")]
-    [SerializeField] Transform objective;
-
-    NavMeshAgent nva;
-	MeleeAttackingEnemyStates actualState;
-
-
-
-	void Awake()
+	public class MeleeAttackingEnemyNavMesh : MonoBehaviour
 	{
-		nva = GetComponent<NavMeshAgent>();
-	}
+		[Header("References")]
+		[SerializeField] Transform target;
 
-	void Start()
-	{
-		objective = GameObject.FindGameObjectWithTag("Player").transform;
-	}
+		NavMeshAgent nva;
+		MeleeAttackingEnemyStates actualState;
 
-	void Update()
-    {
-		switch (actualState)
+
+
+		void Awake()
 		{
-			case MeleeAttackingEnemyStates.Idle:
-				if (nva.destination != transform.position)
-				{
-					nva.destination = transform.position;
-				}
-				break;
-
-			case MeleeAttackingEnemyStates.FollowingPlayer:
-				nva.destination = objective.position;
-				break;
+			nva = GetComponent<NavMeshAgent>();
 		}
-    }
+
+		void Start()
+		{
+			FindTarget();
+		}
+
+		void Update()
+		{
+			UpdateEnemyBehavior();
+		}
 
 
-	public void SetState(MeleeAttackingEnemyStates newState)
-	{
-		actualState = newState;
+
+		public void SetState(MeleeAttackingEnemyStates newState)
+		{
+			actualState = newState;
+		}
+
+		void FindTarget()
+		{
+			target = GameObject.FindGameObjectWithTag("Player").transform;
+		}
+		void UpdateEnemyBehavior()
+		{
+			switch (actualState)
+			{
+				case MeleeAttackingEnemyStates.Idle:
+					if (nva.destination != transform.position)
+					{
+						nva.destination = transform.position;
+					}
+					break;
+
+				case MeleeAttackingEnemyStates.FollowingPlayer:
+					nva.destination = target.position;
+					break;
+			}
+		}
 	}
 }

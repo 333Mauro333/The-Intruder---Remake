@@ -3,21 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class MeleeAttackingEnemyTrigger : MonoBehaviour
+namespace TheIntruder_Remake
 {
-    [SerializeField] List<MeleeAttackingEnemyNavMesh> meleeAttackingEnemies;
-
-
-
-	void OnTriggerEnter(Collider other)
+	public class MeleeAttackingEnemyTrigger : MonoBehaviour
 	{
-		if (other.CompareTag("PlayerCollider"))
+		[Header("References")]
+		[SerializeField] List<MeleeAttackingEnemyNavMesh> meleeAttackingEnemies;
+
+
+
+		void OnTriggerEnter(Collider other)
+		{
+			if (other.CompareTag("PlayerCollider"))
+			{
+				AlertTheEnemies();
+				Autodestroy();
+			}
+		}
+
+
+
+		void AlertTheEnemies()
 		{
 			for (int i = 0; i < meleeAttackingEnemies.Count; i++)
 			{
 				meleeAttackingEnemies[i].SetState(MeleeAttackingEnemyStates.FollowingPlayer);
 			}
-
+		}
+		void Autodestroy()
+		{
 			Destroy(gameObject);
 		}
 	}
