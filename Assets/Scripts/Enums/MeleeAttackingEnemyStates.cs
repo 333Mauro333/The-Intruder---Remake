@@ -1,5 +1,5 @@
 
 namespace TheIntruder_Remake
 {
-	public enum MeleeAttackingEnemyStates { Idle, FollowingPlayer }
+	public enum MeleeAttackingEnemyStates { Idle, FollowingPlayer, Death }
 }
