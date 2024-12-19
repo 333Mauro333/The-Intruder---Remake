@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripts\Enums\MeleeAttackingEnemyStates.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerRotation.cs" />
     <Compile Include="Assets\Scripts\Enemies\Melee Attacking Enemy\MeleeAttackingEnemyTrigger.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Enemy Turret\EnemyTurretSearch.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
   </ItemGroup>
   <ItemGroup>
