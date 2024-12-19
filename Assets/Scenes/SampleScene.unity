@@ -154,6 +154,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1226250863}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &162886942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 162886943}
+  m_Layer: 0
+  m_Name: Bullet Origin Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &162886943
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162886942}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.63, z: 1.258}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2026304880}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &333357927
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,7 +581,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.75, y: 2, z: 0.75}
+  m_Size: {x: 0.6, y: 2, z: 0.6}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &459889066
 Rigidbody:
@@ -2568,7 +2599,6 @@ GameObject:
   - component: {fileID: 2026304880}
   - component: {fileID: 2026304879}
   - component: {fileID: 2026304878}
-  - component: {fileID: 2026304877}
   - component: {fileID: 2026304881}
   m_Layer: 0
   m_Name: Enemy Turret
@@ -2577,27 +2607,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!135 &2026304877
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2026304876}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2026304878
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2665,7 +2674,7 @@ Transform:
   - {fileID: 379094905}
   - {fileID: 1226250863}
   - {fileID: 1412460979}
-  - {fileID: 2096844792}
+  - {fileID: 162886943}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2026304881
@@ -2681,9 +2690,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 50
-  detectionRange: 5
+  detectionRange: 10
   detectionAngle: 30
+  timeBetweenShoots: 0.1
   target: {fileID: 1150147017}
+  offset: {x: 0, y: -0.3, z: 0}
   rayOriginPoints:
   - {fileID: 426557745}
   - {fileID: 687782222}
@@ -2693,8 +2704,8 @@ MonoBehaviour:
   - {fileID: 1365744133}
   - {fileID: 149024486}
   - {fileID: 1058776016}
-  light: {fileID: 2096844791}
---- !u!1 &2096844791
+  bulletOriginPoint: {fileID: 162886943}
+--- !u!1 &2076184110
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2702,92 +2713,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2096844792}
-  - component: {fileID: 2096844793}
+  - component: {fileID: 2076184111}
+  - component: {fileID: 2076184112}
   m_Layer: 0
-  m_Name: Light
+  m_Name: Object Pooling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &2096844792
+  m_IsActive: 1
+--- !u!4 &2076184111
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2096844791}
+  m_GameObject: {fileID: 2076184110}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.36193693, y: 1.5048368, z: -3.0857773}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2026304880}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!108 &2096844793
-Light:
+--- !u!114 &2076184112
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2096844791}
+  m_GameObject: {fileID: 2076184110}
   m_Enabled: 1
-  serializedVersion: 10
-  m_Type: 0
-  m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 200
-  m_Range: 25
-  m_SpotAngle: 45
-  m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 1
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c726faee421579145909b3591d5281d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elementAmount: 25
+  prefab: {fileID: 524226502913493298, guid: e3e0c9028912f744db0909a35e198449, type: 3}
+  elementsCreated: []
 --- !u!1001 &4925402508976376784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2926,7 +2890,8 @@ SceneRoots:
   - {fileID: 1660530270}
   - {fileID: 1287461458}
   - {fileID: 4925402508976376784}
-  - {fileID: 2002946875}
   - {fileID: 1506696163}
-  - {fileID: 837995299}
   - {fileID: 2026304880}
+  - {fileID: 2076184111}
+  - {fileID: 2002946875}
+  - {fileID: 837995299}

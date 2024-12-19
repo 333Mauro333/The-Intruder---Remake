@@ -7,20 +7,23 @@ public class EnemyTurretSearch : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float detectionRange;
 	[SerializeField] float detectionAngle;
+	[SerializeField] float timeBetweenShoots;
 
     [Header("References")]
     [SerializeField] Transform target;
+	[SerializeField] Vector3 offset;
     [SerializeField] Transform[] rayOriginPoints;
-	[SerializeField] GameObject light;
-
+	[SerializeField] Transform bulletOriginPoint;
 
     bool targetWasDetected;
+	float counter;
 
 
 
     void Awake()
     {
         targetWasDetected = false;
+		counter = 0.0f;
     }
 
     void Start()
@@ -38,11 +41,15 @@ public class EnemyTurretSearch : MonoBehaviour
 
 			if (TargetIsInRangeDetection())
 			{
-				light.SetActive(true);
-			}
-			else
-			{
-				light.SetActive(false);
+				if (counter <= 0.0f)
+				{
+					Shoot();
+					ResetTimeBetweenShoots();
+				}
+				else
+				{
+					counter -= Time.deltaTime;
+				}
 			}
 		}
 	}
@@ -91,7 +98,7 @@ public class EnemyTurretSearch : MonoBehaviour
 	}
 	void RotateToTarget()
     {
-		Vector3 direction = target.position - transform.position;
+		Vector3 direction = target.position - transform.position + offset;
 		Quaternion desiredRotation = Quaternion.LookRotation(direction);
 
 		transform.rotation = Quaternion.RotateTowards(transform.rotation,
@@ -115,5 +122,17 @@ public class EnemyTurretSearch : MonoBehaviour
 		}
 
 		return playerIsInRange;
+	}
+	void Shoot()
+	{
+		GameObject shotBullet = ObjectPooling.GetInstance().GetElement();
+
+		shotBullet.transform.position = bulletOriginPoint.position;
+		shotBullet.transform.rotation = bulletOriginPoint.rotation;
+		shotBullet.SetActive(true);
+	}
+	void ResetTimeBetweenShoots()
+	{
+		counter = timeBetweenShoots;
 	}
 }
