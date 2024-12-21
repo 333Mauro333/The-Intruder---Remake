@@ -8,6 +8,7 @@ namespace TheIntruder_Remake
 	{
 		[Header("Values")]
 		[SerializeField] float minDistanceToAttack;
+		[SerializeField] float speed;
 
 		[Header("References")]
 		[SerializeField] GameObject hitCollider1;
@@ -15,6 +16,7 @@ namespace TheIntruder_Remake
 		[SerializeField] Transform target;
 		[SerializeField] GameObject objetoParaCrear;
 
+		BoxCollider bc;
 		NavMeshAgent nva;
 		MeleeAttackingEnemyStates actualState;
 
@@ -26,6 +28,7 @@ namespace TheIntruder_Remake
 
 		void Awake()
 		{
+			bc = GetComponent<BoxCollider>();
 			nva = GetComponent<NavMeshAgent>();
 			actualState = MeleeAttackingEnemyStates.Idle;
 
@@ -63,6 +66,14 @@ namespace TheIntruder_Remake
 			{
 				a.SetBool("PlayerWasDetected", false);
 			}
+			else if (actualState == MeleeAttackingEnemyStates.Death)
+			{
+				nva.destination = transform.position;
+				a.SetBool("PlayerWasDetected", false);
+				a.SetBool("IsDead", true);
+
+				DestroyComponents();
+			}
 		}
 
 		void FindTarget()
@@ -84,7 +95,7 @@ namespace TheIntruder_Remake
 
 					if (stateInfo.IsName("Running"))
 					{
-						nva.speed = 3.5f;
+						nva.speed = speed;
 						nva.destination = target.position;
 
 						if (Vector3.Distance(transform.position, target.position) < minDistanceToAttack)
@@ -196,13 +207,14 @@ namespace TheIntruder_Remake
 					}
 
 					break;
-
-				case MeleeAttackingEnemyStates.Death:
-					nva.destination = transform.position;
-					a.SetBool("PlayerWasDetected", false);
-					a.SetBool("IsDead", true);
-					break;
 			}
+		}
+		void DestroyComponents()
+		{
+			Destroy(nva);
+			Destroy(bc);
+			Destroy(hitCollider1);
+			Destroy(hitCollider2);
 		}
 	}
 }
