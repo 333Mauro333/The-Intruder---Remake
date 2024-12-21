@@ -8,13 +8,22 @@ public class EnemyTurretSearch : MonoBehaviour
     [SerializeField] float detectionRange;
 	[SerializeField] float detectionAngle;
 	[SerializeField] float timeBetweenShoots;
+	[SerializeField] Vector3 offset;
+
+	[Header("Own References")]
+	[SerializeField] GameObject model;
+	[SerializeField] GameObject ownBase;
+    [SerializeField] Transform[] rayOriginPoints;
+	[SerializeField] Transform bulletOriginPoint;
+	[SerializeField] ParticleSystem blueParticles;
+	[SerializeField] ParticleSystem smokeParticles;
+	[SerializeField] Material materialBurned;
 
     [Header("References")]
     [SerializeField] Transform target;
-	[SerializeField] Vector3 offset;
-    [SerializeField] Transform[] rayOriginPoints;
-	[SerializeField] Transform bulletOriginPoint;
 
+	Renderer renderer;
+	bool isAlive;
     bool targetWasDetected;
 	float counter;
 
@@ -22,6 +31,8 @@ public class EnemyTurretSearch : MonoBehaviour
 
     void Awake()
     {
+		renderer = model.GetComponent<Renderer>();
+		isAlive = true;
         targetWasDetected = false;
 		counter = 0.0f;
     }
@@ -35,7 +46,7 @@ public class EnemyTurretSearch : MonoBehaviour
     {
 		targetWasDetected = SearchPlayer();
 
-		if (targetWasDetected)
+		if (isAlive && targetWasDetected)
         {
             RotateToTarget();
 
@@ -51,6 +62,11 @@ public class EnemyTurretSearch : MonoBehaviour
 					counter -= Time.deltaTime;
 				}
 			}
+		}
+
+		if (Input.GetKeyDown(KeyCode.X))
+		{
+			Autodestroy();
 		}
 	}
 
@@ -134,5 +150,13 @@ public class EnemyTurretSearch : MonoBehaviour
 	void ResetTimeBetweenShoots()
 	{
 		counter = timeBetweenShoots;
+	}
+
+	void Autodestroy()
+	{
+		isAlive = false;
+		blueParticles.Stop();
+		smokeParticles.Play();
+		renderer.material = materialBurned;
 	}
 }
