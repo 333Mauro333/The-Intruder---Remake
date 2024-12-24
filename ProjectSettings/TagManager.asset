@@ -6,6 +6,8 @@ TagManager:
   tags:
   - PlayerCollider
   - Wall
+  - Floor
+  - MeleeEnemyCollider
   layers:
   - Default
   - TransparentFX

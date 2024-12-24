@@ -10,16 +10,12 @@ public class Bullet : MonoBehaviour
     float counter;
     float actualSpeed;
 
-    BoxCollider bc;
-
 
 
 	void Awake()
 	{
         counter = lifeTime;
         actualSpeed = speed;
-
-        bc = GetComponent<BoxCollider>();
 	}
 
 	void Update()
@@ -34,14 +30,13 @@ public class Bullet : MonoBehaviour
         }
     }
 
-	void OnCollisionEnter(Collision collision)
+	void OnTriggerEnter(Collider other)
 	{
-		if (collision.gameObject.CompareTag("Wall"))
+		if (other.CompareTag("Wall") || other.CompareTag("Floor") || other.CompareTag("PlayerShip"))
         {
-            actualSpeed = 0.0f;
-            bc.isTrigger = true;
-        }
-        else if (collision.gameObject.CompareTag("PlayerCollider"))
+			actualSpeed = 0.0f;
+		}
+        else if (other.CompareTag("MeleeEnemyCollider"))
         {
             ResetState();
         }
@@ -53,7 +48,6 @@ public class Bullet : MonoBehaviour
     {
         counter = lifeTime;
 		actualSpeed = speed;
-		bc.isTrigger = false;
 
         gameObject.SetActive(false);
     }
