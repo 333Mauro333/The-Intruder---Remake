@@ -6,6 +6,8 @@ Shader "Custom/TriplanarShader"
         _Tiling ("Tiling", Float) = 1
         _BlendSharpness ("Blend Sharpness", Float) = 2
         _Tint ("Tint Color", Color) = (1,1,1,1)
+        _Metallic ("Metallic", Range(0, 1)) = 0.0
+        _Smoothness ("Smoothness", Range(0, 1)) = 0.5
     }
     SubShader
     {
@@ -17,6 +19,8 @@ Shader "Custom/TriplanarShader"
         float _Tiling;
         float _BlendSharpness;
         fixed4 _Tint;
+        float _Metallic;
+        float _Smoothness;
 
         struct Input
         {
@@ -44,8 +48,11 @@ Shader "Custom/TriplanarShader"
             // Apply tint
             finalColor.rgb *= _Tint.rgb;
 
+            // Set outputs
             o.Albedo = finalColor.rgb;
             o.Alpha = finalColor.a;
+            o.Metallic = _Metallic;
+            o.Smoothness = _Smoothness;
         }
 
         ENDCG
